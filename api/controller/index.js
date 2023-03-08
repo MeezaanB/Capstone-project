@@ -21,13 +21,13 @@ router.get('/', (req, res)=> {
 
 // Register User
 
-register.post('/login', parser.json(), (req, res) => {
+router.post('/login', parser.json(), (req, res) => {
     user.createUser(req, res);
 })
 
 // Login 
 
-router.post('/login', parser.join(), (req, res) => {
+router.post('/login', parser.json(), (req, res) => {
     user.login(req, res);
 })
 
@@ -59,7 +59,7 @@ router.delete('/user/:id', (req, res) => {
 
 // Create a new product
 
-register.post('/product', parser.json(), (req, res) => {
+router.post('/product', parser.json(), (req, res) => {
     product.addProduct(req, res);
 })
 
