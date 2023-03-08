@@ -75,7 +75,7 @@ class User {
             `
     SELECT firstName, lastName, gender, emailAddress, userPassword, userRole, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
     FROM users
-    WHERE userId = ?;
+    WHERE userID = ?;
     `;
         DB.query(querySt, [req.params.id],
             (err, data) => {
@@ -91,7 +91,7 @@ class User {
         hash(info.userPassword, 15);
         let user = {
             email: info.emailAddress,
-            userPass: info.userPassword
+            userPassword: info.userPassword
         }
 
         const querySt =
@@ -124,7 +124,7 @@ class User {
             `
         UPDATE users
         SET ?
-        WHERE userID = ?;
+        WHERE userId = ?;
         `;
 
         DB.query(querySt, [data, req.params.id],

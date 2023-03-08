@@ -21,7 +21,7 @@ router.get('/', (req, res)=> {
 
 // Register User
 
-router.post('/login', parser.json(), (req, res) => {
+router.post('/register', parser.json(), (req, res) => {
     user.createUser(req, res);
 })
 
@@ -46,7 +46,7 @@ router.get('/user/:id', (req, res) => {
 // Update user
 
 router.put('/user/:id', parser.json(), (req, res) => {
-    user.updaterUser(req, res);
+    user.updateUser(req, res);
 })
 
 // Delete user 
