@@ -17,7 +17,7 @@ class User {
             userPassword
         } = req.body;
         const querySt =
-            `SELECT firstName, lastName, gender, emailAddress, userPassword, userRole, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
+            `SELECT firstName, lastName, gender, emailAddress, userPassword, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
         FROM users 
         WHERE emailAddress = '${emailAddress}' `;
         DB.query(querySt, async (err, data) => {
@@ -59,7 +59,7 @@ class User {
     fetchUsers(req, res) {
         const querySt =
             `
-    SELECT firstName, lastName, gender, emailAddress, userPassword, userRole, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
+    SELECT firstName, lastName, gender, emailAddress, userPassword, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
     FROM users;
     `;
 
@@ -73,7 +73,7 @@ class User {
     fetchUser(req, res) {
         const querySt =
             `
-    SELECT firstName, lastName, gender, emailAddress, userPassword, userRole, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
+    SELECT firstName, lastName, gender, emailAddress, userPassword, userProfile, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
     FROM users
     WHERE userID = ?;
     `;
@@ -168,12 +168,11 @@ class Product {
     }
     fetchProduct(req, res) {
         const querySt =
-            `
-    SELECT productID, productName, productDescription, category, price, productQuantity, imgURL
+            ` SELECT productID, productName, productDescription, category, price, productQuantity, imgURL
     FROM products
     WHERE productID = ?;
     `;
-        DB.query(strQry, [req.params.id], (err, results) => {
+        DB.query(querySt, [req.params.id], (err, results) => {
             if (err) throw err;
             res.status(200).json({
                 results: results
@@ -241,7 +240,100 @@ class Product {
     }
 }
 
+class Cart {
+    fetchCart(req, res) {
+        const strQry =
+        `
+        SELECT productName, price, imgURL 
+        FROM users
+        inner join cart on users.userID = cart.userID
+        inner join products on cart.productID = products.productID
+        where cart.userID = ${req.params.id};
+        `;
+        DB.query(strQry, (err, results) => {
+            if (err) throw err;
+            res.status(200).json({
+                results: results
+            })
+        });
+    }
+    addCart(req, res) {
+        const strQry =
+            `
+        INSERT INTO cart
+        SET ?;
+        `;
+        DB.query(strQry, [req.body],
+            (err) => {
+                if (err) {
+                    res.status(400).json({
+                        err: "Unable to add to cart."
+                    });
+                } else {
+                    res.status(200).json({
+                        msg: "Successfully added to cart."
+                    });
+                }
+            }
+        );
+
+    }
+    updateCart(req, res) {
+        const querySt =
+            `
+        UPDATE cart
+        SET ?
+        WHERE cartID = ?
+        `;
+        DB.query(querySt, [req.body, req.params.id],
+            (err) => {
+                if (err) {
+                    res.status(400).json({
+                        err: "Could not update cart."
+                    });
+                } else {
+                    res.status(200).json({
+                        msg: "Cart successfully updated"
+                    });
+                }
+            }
+        );
+
+    }
+    deleteItemCart(req, res) {
+        const querySt =
+            `
+        DELETE FROM cart
+        WHERE productID = ?;
+        `;
+
+        DB.query(querySt, [req.params.id],
+            (err) => {
+                if (err) res.status(400).json({err: "Record not found"});
+                res.status(200).json({
+                    msg: "Item was removed."
+                });
+            })
+    }
+    deleteCart(req, res) {
+        const querySt =
+            `
+        DELETE FROM cart
+        WHERE userID = ?;
+        `;
+
+        DB.query(querySt, [req.params.id],
+            (err) => {
+                if (err) res.status(400).json({err: "Record not found"});
+                res.status(200).json({
+                    msg: "Cart has been cleared."
+                });
+            })
+    }
+}
+
 module.exports = {
     User,
-    Product
+    Product,
+    Cart
 }
