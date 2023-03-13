@@ -20,10 +20,9 @@ app.use((req, res, next)=> {
     next();
 });
 
-app.use(route);
-
 app.use(
     cors(),
+    route,
     cookieParser(),
     express.json(),
     express.urlencoded({extended: true})

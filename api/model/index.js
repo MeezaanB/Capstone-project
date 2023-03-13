@@ -155,17 +155,12 @@ class User {
 
 class Product {
     fetchProducts(req, res) {
-    //     const querySt =
-    //         `SELECT productID, productName, productDescription, category, price, productQuantity, imgURL
-    // FROM products;
-    // `;
-    //     DB.query(querySt, (err, results) => {
-    //         if (err) throw err;
-    //         res.status(200).json({
-    //             results: results
-    //         })
-    //     });
-        res.status(200).json({msg: "Well done"})
+        const querySt = `SELECT productID, productName, productDescription, category, price, productQuantity, imgURL
+                        FROM products;`;
+        DB.query(querySt, (err, results) => {
+            if (err) throw err;
+            res.status(200).json({results})
+        });
     }
     fetchProduct(req, res) {
         const querySt =
