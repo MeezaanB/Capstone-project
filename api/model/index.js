@@ -124,7 +124,7 @@ class User {
             `
         UPDATE users
         SET ?
-        WHERE userId = ?;
+        WHERE userID = ?;
         `;
 
         DB.query(querySt, [data, req.params.id],
@@ -202,7 +202,7 @@ class Product {
             `
         UPDATE products
         SET ?
-        WHERE id = ?
+        WHERE productID = ?
         `;
         DB.query(querySt, [req.body, req.params.id],
             (err) => {
@@ -223,7 +223,7 @@ class Product {
         const querySt =
             `
         DELETE FROM products
-        WHERE id = ?;
+        WHERE productID = ?;
         `;
         DB.query(querySt, [req.params.id], (err) => {
             if (err) res.status(400).json({
