@@ -102,24 +102,25 @@ export default createStore({
         context.commit('setMessage', err)
       }
     },
-    // async updateUser(context, id) {
-    //   const res = await axios.put(`${nightcrawler}user/${id}`)
-    //   let { results, err } = await res.data;
-    //   if (results) {
-    //     context.commit('setUser', results)
-    //   }else {
-    //     context.commit('setMessage', err)
-    //   }
-    // },
-    // async deleteUser(context, id) {
-    //   const res = await axios.delete(`${nightcrawler}user/${id}`)
-    //   let { results, err } = await res.data;
-    //   if (results) {
-    //     context.commit('setUser', results)
-    //   }else {
-    //     context.commit('setMessage', err)
-    //   }
-    // },
+    async updateUser(context, id) {
+      const res = await axios.put(`${nightcrawler}user/${id}`)
+      let { results, err } = await res.data;
+      if (results) {
+        context.commit('setUser', results)
+      }else {
+        context.commit('setMessage', err)
+      }
+    },
+    async deleteUser(context, dispatch, id) {
+      try{
+        await axios.delete(`${nightcrawler}user/${id}`)
+        context.commit('setMessage', 'User Deleted successfully'); 
+        dispatch('fetchUsers');
+      } catch (error) {
+        context.commit('setMessage', 'Could not delete user')
+      }
+  
+    },
      /* PRODUCTS METHODS */
     async getProducts(context) {
       const res = await axios
