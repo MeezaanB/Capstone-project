@@ -5,46 +5,55 @@
         <div style="padding-top:100px;">
           <center>
             <h4>Create an account</h4>
-            <form>
+            <form @submit.prevent="register">
               <div class="form-row">
                 <div class="col-sm-6">
-                  <input type="email" v-model="firstName" placeholder="First Name" class="form-control my-3" required>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <input type="email" v-model="lastName" placeholder="Last Name" class="form-control my-3" required>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <input type="email" v-model="gender" placeholder="Gender" class="form-control my-3" required>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <input type="email" v-model="emailAddress" placeholder="Email Address" class="form-control my-3"
+                  <input type="text" v-model="payload.firstName" placeholder="First Name" class="form-control my-3"
                     required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-sm-6">
-                  <input type="password" v-model="userPassword" placeholder="******" class="form-control" required>
+                  <input type="text" v-model="payload.lastName" placeholder="Last Name" class="form-control my-3"
+                    required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-sm-6">
-                  <input type="text" v-model="userProfile" placeholder="IMG URL" class="form-control my-3" required>
+                  <input type="text" v-model="payload.gender" placeholder="Gender" class="form-control my-3" required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-sm-6">
-                  <input type="date" v-model="firstName" class="form-control my-3" required>
+                  <input type="email" v-model="payload.emailAddress" placeholder="Email Address" class="form-control my-3"
+                    required>
                 </div>
               </div>
               <div class="form-row">
                 <div class="col-sm-6">
-                  <button type="submit" class="btn1 mt-3 mb-5">Register</button>
+                  <input type="password" v-model="payload.userPassword" placeholder="******" class="form-control"
+                    required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="text" v-model="payload.userProfile" placeholder="IMG URL" class="form-control my-3"
+                    required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <input type="date" v-model="payload.joinDate" class="form-control my-3" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <p class="lead">{{ message }}</p>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <button type="submit" class="btn1 mt-3 mb-5" @click.prevent="register">register</button>
                 </div>
               </div>
               <p>Already have an account ? <a href="/login">login here</a></p>
@@ -60,14 +69,35 @@
 
 
 export default {
-  components: {
-
+  components: {},
+  data() {
+    return {
+      payload: {
+        firstName: '',
+        lastName: '',
+        gender: '',
+        emailAddress: '',
+        userPassword: '',
+        userProfile: 'https://i.postimg.cc/Gt87rd3h/team.jpg',
+        joinDate: ''
+      }
+    }
+  },
+  computed: {
+    message() {
+      return this.$store.state.message
+    }
+  },
+  methods: {
+    register() {
+      console.log('Debug', this.payload);
+      this.$store.dispatch('register', this.payload)
+    }
   }
 }
 </script>
 
 <style scoped>
-
 #register {
   height: 100vh;
 }

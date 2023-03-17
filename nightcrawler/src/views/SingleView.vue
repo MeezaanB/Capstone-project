@@ -5,21 +5,24 @@
         <h1 class="shop-text">View Now</h1>
       </div>
       <div class="container">
-        <div class="row align-items-end">
+        <div class="row align-items-center">
           <div class="col-sm-6">
-            <img class="view" src="https://i.postimg.cc/QNTpBbhR/battery-charger.png" alt="">
+            <img class="view" :src="product?.imgURL" alt="">
           </div>
           <div class="col-sm-6" style="padding: 25px">
             <h3 class="text-start">
               <span>Product Name:</span> 
-              Battery Charger</h3><br>
+              {{ product?.productName }}</h3><br>
             <p class="text-start">
-              <span>Product Description:</span> 
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia veritatis molestiae veniam consequuntur nemo. Ex dignissimos molestias numquam quasi nobis velit commodi culpa explicabo, temporibus in iste, rerum minus cumque!</p><br>
+              <span>Product Description:</span><br><br>
+              {{product?.productDescription}}</p><br>
+            <p class="text-start">
+              <span>Category:</span> 
+              {{product?.category}}</p><br>
             <p class="text-start">
               <span>Product Price:</span>
-               R100</p>
-            <a href="/shop" class="btn btn-dark align-items-md-start">Im interested</a>
+               R{{product?.price}}</p>
+               <button class="btn btn-primary">Add to Cart</button>
           </div>
         </div>
       </div>
@@ -29,10 +32,23 @@
 </template>
 
 <script>
+
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex';
 import FooterComponent from "@/components/FooterComponent.vue";
 
 export default {
   components: { FooterComponent },
+  setup() {
+    const store = useStore()
+    const product = computed(() => store.state.product)
+    return { product }
+  },
+
+  mounted() {
+    this.$store.dispatch("getProduct", this.$route.params.id)
+  }
+  
 };
 </script>
 

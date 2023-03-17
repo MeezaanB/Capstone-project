@@ -5,15 +5,14 @@
         <h1 class="shop-text">Shop Now</h1>
       </div>
       <div class="container">
-        <div class="row align-items-end"><button class="btn"><i class="fa-solid fa-cart-shopping"></i></button></div>
         <div class="row">
           <div class="col-sm-4">
             <div class="buttons align-items-center" style="padding: 20px;display:grid; gap:10px;">
               <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit">Search</button>
+                <input class="form-control w-100" v-model="searchTerm" type="search" placeholder="Search Product by Name"
+                  aria-label="Search">
               </form>
-              <button class="btn btn-dark w-100">Sort</button>
+              <button @click.prevent="sortbyPrice" class="btn btn-dark w-100">Sort Price <i class="fa-solid fa-arrow-up"></i> <i class="fa-solid fa-arrow-down"></i></button>
               <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
@@ -27,23 +26,28 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-8" style="padding:0;margin:0">
-            <div class="row row-cols-sm-4 gap-3" style="padding: 20px;justify-content:center">
-              <div class="card" v-for="product in products" :key="product">
-                <img :src="product.imgURL" class="image-fluid" style="height: 10rem;">
-                <div class="overlay">
-                  <div class="text" style="display:flex;justify-content:center;gap:5px">
-                    <button class="btn btn-info">See More</button>
-                    <button class="btn btn-danger">Add to Cart</button>
+          <div class="col-sm-8" style="padding:0;margin:0;">
+            <SpinnerComponent style="display: flex;justify-content:center;padding:20px" v-if="isSpinning"/>
+            <div v-else>
+              <div class="row row-cols-sm-4 gap-3" style="padding: 20px;justify-content:center">
+                <div class="card" style="width:17rem" v-for="product in filteredByProductName" :key="product.productID">
+                  <img :src="product.imgURL" style="height: 10rem;" class="image-fluid">
+                  <div class="overlay">
+                    <div class="text" style="display:flex;justify-content:center;gap:5px">
+                      <router-link :to="{name: 'single', params : {id: product.productID}}">
+                        <button class="btn btn-info" v-if="this.$store.state.userAuth">View Product</button>
+                      </router-link>
+                    </div>
                   </div>
+                  <h3 class="product">{{ product.productName }}</h3>
+                  <p class="product">{{ product.category }}</p>
+                  <p>R{{ product.price }}</p>
                 </div>
-                <h3 class="name text-center">{{product.productName}}</h3>
-                <p class="text-center">{{product.productPrice}}</p>
               </div>
+            </div>
             </div>
           </div>
         </div>
-      </div>
     </section>
   </main>
   <FooterComponent />
@@ -51,16 +55,41 @@
 <script>
 import { computed } from '@vue/runtime-core'
 import { useStore } from 'vuex';
+import SpinnerComponent from '@/components/SpinnerComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
-
 export default {
-  components: { FooterComponent },
+  components: { SpinnerComponent, FooterComponent },
   setup() {
     const store = useStore()
     store.dispatch("getProducts")
     const products = computed(() => store.state.products)
+    // products.value.filter((product) => product.category === "high maintenance")
     return { products }
-  }
+  },
+  created() {
+    setTimeout(() => {
+      this.isSpinning = false;
+    }, 3000)
+  },
+  data() {
+    return {
+      searchTerm: "",
+      filteredProducts: [],
+      isSpinning: true,
+    }
+  },
+  computed: {
+    filteredByProductName() {
+      return this.products.filter(product => {
+        return product.productName.toLowerCase().includes(this.searchTerm.toLowerCase())
+      })
+    }
+  },
+  methods: {
+    sortbyPrice() {
+      this.$store.commit("sortProductsByPrice");
+    }
+  },
 };
 </script>
 <style scoped>
@@ -80,6 +109,13 @@ export default {
   color: white;
   text-shadow: 2px 2px 4px rgb(134, 131, 131);
   position: relative;
+}
+
+.product {
+  font-family: "Special Elite", cursive;
+  text-align: center;
+  color: black;
+  text-shadow: 2px 2px 4px rgb(134, 131, 131);
 }
 
 .shop-text::after {
@@ -124,12 +160,4 @@ export default {
 
 .btn {
   width: 100px;
-}
-
-.name {
-  font-family: "Special Elite", cursive;
-  text-align: center;
-  color: black;
-  text-shadow: 2px 2px 4px rgb(134, 131, 131);
-}
-</style>
+}</style>

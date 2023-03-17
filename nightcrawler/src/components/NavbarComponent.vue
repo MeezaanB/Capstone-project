@@ -11,15 +11,8 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Shop
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/shop">Shop All</a></li>
-                            <li><a class="dropdown-item" href="/single">Single</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/shop">Shop</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin">Admin</a>

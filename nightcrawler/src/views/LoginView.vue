@@ -5,23 +5,28 @@
             <div style="padding-top:100px;">
               <center>
                 <h4>Sign into your account</h4>
-                <form>
+                <form @submit.prevent="login">
                   <div class="form-row">
                     <div class="col-sm-6">
-                      <input type="email" v-model="email" placeholder="Email Address" class="form-control my-3" required>
+                      <input type="email" v-model="payload.emailAddress" placeholder="Email Address" class="form-control my-3" required>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="col-sm-6">
-                      <input type="password" v-model="userPass" placeholder="******" class="form-control" required>
+                      <input type="password" v-model="payload.userPassword" placeholder="******" class="form-control" required>
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="col-sm-6">
-                      <button type="submit" class="btn1 mt-3 mb-5">Login</button>
+                      <p class="lead">{{message}}  {{user?.firstName}}</p>
+
                     </div>
                   </div>
-                  <p>Forgot your password <ForgetPassword/></p>
+                  <div class="form-row">
+                    <div class="col-sm-6">
+                      <button type="submit" class="btn1 mt-3 mb-5" @click.prevent="login">Login</button>
+                    </div>
+                  </div>
                   <p>Don't have an account? <a href="/register">Register here</a></p>
                 </form>
               </center>
@@ -31,13 +36,32 @@
   </body>
   </template>
   
-  <script>
-  
-  
-  export default {
-    components: {
-      
-    }
+<script>
+
+export default {
+    components: {},
+    data(){
+      return {
+        payload: {
+          emailAddress: '',
+          userPassword: ''
+        }
+      }
+    },
+    computed: {
+      user() {
+        return this.$store.state.user
+      },
+      message() {
+        return this.$store.state.message
+      }
+    },
+    methods: {
+      login() {
+        console.log('Debug:', this.payload);
+        this.$store.dispatch('login', this.payload)
+      }
+    } 
   }
   </script>
   <style scoped>

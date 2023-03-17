@@ -9,7 +9,7 @@ footer
           <ul>
             <li><a href="/#home">Home</a></li>
             <li><a href="/#about">About</a></li>
-            <li><a href="/#admin">Admin</a></li>
+            <li><a href="/admin">Admin</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
@@ -25,7 +25,6 @@ footer
           <h4>Shopping</h4>
           <ul>
             <li><a href="/shop">Shop</a></li>
-            <li><a href="single">Preview</a></li>
             <li><a href="/checkout">Checkout</a></li>
           </ul>
         </div>

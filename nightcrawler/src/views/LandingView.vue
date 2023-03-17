@@ -143,19 +143,25 @@
             <div class="col-sm-4">
               <h3 class="sub-product">Battery Charger</h3>
               <div class="image-box">
-                <img class="img-fluid" src="https://i.postimg.cc/QNTpBbhR/battery-charger.png"/>
+                <router-link :to="{name: 'shop'}" >
+                  <img class="img-fluid" src="https://i.postimg.cc/QNTpBbhR/battery-charger.png"/>
+                </router-link>          
               </div>
             </div>
             <div class="col-sm-4">
               <h3 class="sub-product">Portable Generator</h3>
               <div class="image-box">
-                <img class="img-fluid" src="https://i.postimg.cc/g01xdCXr/P-generator.png"/>
+                <router-link :to="{name: 'shop'}" >
+                  <img class="img-fluid" src="https://i.postimg.cc/g01xdCXr/P-generator.png"/>
+                </router-link>         
               </div>
             </div>
             <div class="col-sm-4">
               <h3 class="sub-product">UPS</h3>
               <div class="image-box">
-                <img class="img-fluid" src="https://i.postimg.cc/7ZN5HgRb/UPS.png"/>
+                <router-link :to="{name: 'shop'}" >
+                  <img class="img-fluid" src="https://i.postimg.cc/7ZN5HgRb/UPS.png"/>
+                </router-link>
               </div>
             </div>
           </div>
