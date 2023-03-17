@@ -164,14 +164,15 @@ export default createStore({
     //     context.commit('setMessage', err)
     //   }
     // },
-    async deleteProduct(context, id) {
-      const res = await axios.delete(`${nightcrawler}product/${id}`)
-      let { results, err } = await res.data;
-      if (results) {
-        context.commit('setProduct', results)
-      }else {
-        context.commit('setMessage', err)
+    async deleteProduct(context, dispatch, id) {
+      try{
+        await axios.delete(`${nightcrawler}product/${id}`)
+        context.commit('setMessage', 'Product Deleted successfully'); 
+        dispatch('fetchProducts');
+      } catch (error) {
+        context.commit('setMessage', 'Could not delete product')
       }
+  
     }
      /* CART METHODS */
   },

@@ -63,7 +63,7 @@
                 <td data-label="Quantity">{{product.productQuantity}}</td>
                 <td data-label="Image"><img :src="product.imgURL" style="height:5rem" alt=""></td>
                 <td data-label="Edit"><UpdateProduct/></td>
-                <td data-label="Delete"><div class="btn btn-danger">Delete</div></td>
+                <td data-label="Delete"><button @click="deleteProduct(product.productID)" type="submit" class="btn btn-danger">Delete</button></td>
               </tr>
             </tbody>
           </table>
@@ -105,6 +105,11 @@ export default {
   data() {
     return {
       isSpinning: true
+    }
+  },
+  methods: {
+    deleteProduct(productID) {
+      this.$store.dispatch('deleteProduct', productID)
     }
   }
 };
