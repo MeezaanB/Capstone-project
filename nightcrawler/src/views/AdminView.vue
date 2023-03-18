@@ -14,6 +14,7 @@
         <table class="table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>FirstName</th>
               <th>LastName</th>
               <th>Gender</th>
@@ -26,6 +27,7 @@
           </thead>
           <tbody>
             <tr v-for="user in users" :key="user">
+              <td data-label="ID">{{ user.userID }}</td>
               <td data-label="FirstName">{{ user.firstName }}</td>
               <td data-label="LastName">{{ user.lastName }}</td>
               <td data-label="Gender">{{ user.gender }}</td>
@@ -49,6 +51,7 @@
         <table class="table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Name</th>
               <th>Category</th>
               <th>Price</th>
@@ -60,6 +63,7 @@
           </thead>
           <tbody>
             <tr v-for="product in products" :key="product">
+              <td data-label="ID">{{ product.productID }}</td>
               <td data-label="Name">{{ product.productName }}</td>
               <td data-label="Category">{{ product.category }}</td>
               <td data-label="Price">R{{ product.price }}</td>

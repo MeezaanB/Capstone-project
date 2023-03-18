@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       searchTerm: "",
-      filteredProducts: [],
+      // filterOption: [],
       isSpinning: true,
     }
   },
@@ -84,6 +84,16 @@ export default {
         return product.productName.toLowerCase().includes(this.searchTerm.toLowerCase())
       })
     }
+  //   ,
+  //   filteredProducts() {
+  //   if (this.filterOption === 'high maintenance') {
+  //     return this.products;
+  //   } else {
+  //     return this.products.filter(product => {
+  //       return product.category === this.filterOption;
+  //     });
+  //   }
+  // },
   },
   methods: {
     sortbyPrice() {
