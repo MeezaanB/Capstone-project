@@ -93,8 +93,7 @@ export default createStore({
       }
     },
     async getUser(context, id) {
-      const res = await axios
-      .get(`${nightcrawler}user/${id}`)
+      const res = await axios.get(`${nightcrawler}user/${id}`)
       let { results, err } = await res.data;
       if (results) {
         context.commit('setUser', results)
