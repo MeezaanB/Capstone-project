@@ -59,7 +59,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in products" :key="product.productID">
+            <tr v-for="product in products" :key="product">
               <td data-label="Name">{{ product.productName }}</td>
               <td data-label="Category">{{ product.category }}</td>
               <td data-label="Price">R{{ product.price }}</td>
@@ -94,12 +94,10 @@ export default {
     const store = useStore()
 
     store.dispatch("getUsers")
-    const users = computed(() => store.state.users)
-    store.dispatch("deleteUser")
-
     store.dispatch("getProducts")
+
+    const users = computed(() => store.state.users)
     const products = computed(() => store.state.products)
-    store.dispatch("deleteProduct")
 
     return { products, users }
   },
@@ -114,11 +112,11 @@ export default {
     }
   },
   methods: {
-    deleteProduct(productID) {
-      this.$store.dispatch('deleteProduct', productID)
+    deleteUser(id) {
+      this.$store.dispatch('deleteUser', id)
     },
-    deleteUser(userID) {
-      this.$store.dispatch('deleteUser', userID)
+    deleteProduct(id) {
+      this.$store.dispatch('deleteProduct', id)
     }
   }
 }

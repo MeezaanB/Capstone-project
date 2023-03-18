@@ -101,30 +101,19 @@ export default createStore({
       } else {
         context.commit('setMessage', err)
       }
-    },
-    async updateUser(context, id) {
-      const res = await axios.put(`${nightcrawler}user/${id}`)
-      let { results, err } = await res.data;
-      if (results) {
-        context.commit('setUser', results)
-      }else {
-        context.commit('setMessage', err)
-      }
-    },
-    async deleteUser(context, dispatch, id) {
+    },  
+    async deleteUser({commit, dispatch }, id) {
       try{
         await axios.delete(`${nightcrawler}user/${id}`)
-        context.commit('setMessage', 'User Deleted successfully'); 
-        dispatch('fetchUsers');
+        commit('setMessage', 'User Deleted successfully'); 
+        dispatch('getUsers');
       } catch (error) {
-        context.commit('setMessage', 'Could not delete user')
+        commit('setMessage', 'Could not delete user')
       }
-  
     },
      /* PRODUCTS METHODS */
     async getProducts(context) {
-      const res = await axios
-      .get(`${nightcrawler}products`)
+      const res = await axios.get(`${nightcrawler}products`)
       let { results, err } = await res.data;
       if (results) {
         context.commit('setProducts', results)
@@ -156,24 +145,14 @@ export default createStore({
         console.error(error) 
       }
     },
-    // async updateProduct(context, id) {
-    //   const res = await axios.put(`${nightcrawler}product/${id}`)
-    //   let { results, err } = await res.data;
-    //   if (results) {
-    //     context.commit('setProduct', results[0])
-    //   }else {
-    //     context.commit('setMessage', err)
-    //   }
-    // },
-    async deleteProduct(context, dispatch, id) {
+    async deleteProduct({commit, dispatch }, id) {
       try{
         await axios.delete(`${nightcrawler}product/${id}`)
-        context.commit('setMessage', 'Product Deleted successfully'); 
-        dispatch('fetchProducts');
+        commit('setMessage', 'Product Deleted successfully'); 
+        dispatch('getProducts');
       } catch (error) {
-        context.commit('setMessage', 'Could not delete product')
+        commit('setMessage', 'Could not delete product')
       }
-  
     }
      /* CART METHODS */
   },
