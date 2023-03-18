@@ -7,7 +7,8 @@ let connection = createPool ({
     password: process.env.PASSWORD,
     port: process.env.DBPORT,
     database: process.env.DB,
-    multipleStatements: true
+    multipleStatements: true,
+    connectionLimit: 30
 });
 
 module.exports = connection;
