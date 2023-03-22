@@ -43,7 +43,7 @@ const routes = [
     component: () => import('../views/RegisterView.vue')
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: 'profile',
     component: () => import('../views/UserProfile.vue')
   },

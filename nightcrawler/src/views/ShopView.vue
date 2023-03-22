@@ -9,20 +9,21 @@
           <div class="col-sm-4">
             <div class="buttons align-items-center" style="padding: 20px;display:grid; gap:10px;">
               <form class="d-flex" role="search">
-                <input class="form-control w-100" v-model="searchTerm" type="search" placeholder="Search Product by Name"
+                <input class="form-control w-100" v-model="searchProductName" type="search" placeholder="Search Product by Name"
                   aria-label="Search">
               </form>
               <button @click.prevent="sortbyPrice" class="btn btn-dark w-100">Sort Price <i class="fa-solid fa-arrow-up"></i> <i class="fa-solid fa-arrow-down"></i></button>
               <div class="dropdown">
-                <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
+                <!-- <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
                   Filter By
-                </button>
-                <ul class="dropdown-menu bg-dark">
-                  <li><a class="dropdown-item bg-dark text-light" href="#">Low-Maintenance</a></li>
-                  <li><a class="dropdown-item bg-dark text-light" href="#">Medium-Maintenance</a></li>
-                  <li><a class="dropdown-item bg-dark text-light" href="#">High-Maintenance</a></li>
-                </ul>
+                </button> -->
+                <select class="btn btn-dark w-100" required v-model="category">
+                  <option value="" selected >All Items</option>
+                  <option value="low maintenance">low maintenance</option>
+                  <option value="medium maintenance">medium maintenance</option>
+                  <option value="high maintenance">high maintenance</option>
+                </select>
               </div>
             </div>
           </div>
@@ -37,6 +38,7 @@
                       <router-link :to="{name: 'single', params : {id: product.productID}}">
                         <button class="btn btn-info" v-if="this.$store.state.userAuth">View Product</button>
                       </router-link>
+                      <button class="btn btn-primary">Add to Cart</button>
                     </div>
                   </div>
                   <h3 class="product">{{ product.productName }}</h3>
@@ -73,28 +75,25 @@ export default {
   },
   data() {
     return {
-      searchTerm: "",
+      searchProductName: "",
       // filterOption: [],
       isSpinning: true,
+      category: ''
     }
   },
   computed: {
     filteredByProductName() {
-      return this.products.filter(product => {
-        return product.productName.toLowerCase().includes(this.searchTerm.toLowerCase())
-      })
-    }
-  //   ,
-  //   filteredProducts() {
-  //   if (this.filterOption === 'high maintenance') {
-  //     return this.products;
-  //   } else {
-  //     return this.products.filter(product => {
-  //       return product.category === this.filterOption;
-  //     });
-  //   }
-  // },
-  },
+      let filteredByCategory = this.products.filter(item => item.category == this.category || this.category == '')
+      if (this.searchProductName.trim().length > 0) {
+        return filteredByCategory.filter((input) => input.category.toLowerCase().includes(this.filteredByCategory.trim().toLowerCase))
+      }
+      return filteredByCategory
+      // return this.products.filter(product => {
+      //   return product.productName.toLowerCase().includes(this.searchProductName.toLowerCase())
+      }
+    },
+    
+
   methods: {
     sortbyPrice() {
       this.$store.commit("sortProductsByPrice");

@@ -22,7 +22,6 @@
             <p class="text-start">
               <span>Product Price:</span>
                R{{product?.price}}</p>
-               <button class="btn btn-primary">Add to Cart</button>
           </div>
         </div>
       </div>

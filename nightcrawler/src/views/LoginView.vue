@@ -18,13 +18,20 @@
                   </div>
                   <div class="form-row">
                     <div class="col-sm-6">
-                      <p class="lead">{{message}}  {{user?.firstName}}</p>
+                      <p class="lead">{{message}}</p>
 
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="col-sm-6">
                       <button type="submit" class="btn1 mt-3 mb-5" @click.prevent="login">Login</button>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="col-sm-6">
+                      <router-link :to="{name: 'profile', params : {id: user.userID}}">
+                        <button class="btn btn-info">My Account</button>
+                      </router-link>
                     </div>
                   </div>
                   <p>Don't have an account? <a href="/register">Register here</a></p>
@@ -37,9 +44,16 @@
   </template>
   
 <script>
-
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex';
 export default {
     components: {},
+    setup() {
+    const store = useStore()
+    store.dispatch("getUsers")
+    const users = computed(() => store.state.users)
+    return { users }
+  },
     data(){
       return {
         payload: {
