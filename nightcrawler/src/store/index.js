@@ -1,14 +1,14 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
-import {useCookies} from 'vue3-cookies';
-const {cookies} =useCookies();
+// import {useCookies} from 'vue3-cookies';
+// const {cookies} =useCookies();
 const api = "https://nightcrawler-capstone.onrender.com/"
 export default createStore({
   state: {
     users: null,
-    user: null,
-    userAuth: true,
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    userAuth: JSON.parse(localStorage.getItem('userAuth')) || null,
     loggedIn:null,
     products: null,
     product: null,
@@ -16,15 +16,16 @@ export default createStore({
     token: null,
     spinner: true,
     asc: true,
-    message: null
+    message: null,
   },
   mutations: {
     setUsers(state, values) {
       state.users = values
     },
-    setUser(state, value) {
-      state.user = value
+    setUser(state, user) {
+      state.user = user
       state.userAuth = true
+      localStorage.setItem('user', JSON.stringify(user))
     },
     setToken(state, value) {
       state.token = value
@@ -68,10 +69,12 @@ export default createStore({
             if(result) {
               context.commit('setUser', result);
               context.commit('setToken', jToken);
-              cookies.set('user_cookie_value', jToken)
+              // cookies.set('user_cookie_value', jToken)
+              localStorage.setItem('user_token', jToken)
+              localStorage.setItem('user', JSON.stringify(result))
               context.commit('setMessage', msg);
               setTimeout(()=> {
-                router.push({name: 'landing' });
+                router.push({name: 'shop' });
               }), 3000
             }else {
               context.commit('setMessage', err);
@@ -194,7 +197,7 @@ export default createStore({
       }
     },
      /* CART METHODS */
-    async fetchCart(context, id) {
+    async getCart(context, id) {
       const res = await axios.get(`${api}user/${id}/carts`)
       let { results, err } = await res.data;
       if (results) {
@@ -210,6 +213,33 @@ export default createStore({
         context.commit('setCart', results)
       } else {
         context.commit('setMessage', err)
+      }
+    },
+    async updateCart(context, id) {
+      const res = await axios.put(`${api}/user/${id}/cart/${id}`) 
+        let {results, err} = await res.data
+        if (results, err) {
+          context.commit('setCart', results)
+        } else {
+          context.commit('setMessage', err)
+        }
+    },
+    async deleteItemCart({commit, dispatch }, id) {
+      try{
+        await axios.delete(`${api}user/${id}/cart/${id}`)
+        commit('setMessage', 'Item removed successfully'); 
+        dispatch('getCart');
+      } catch (error) {
+        commit('setMessage', 'Could not remove item')
+      }
+    },
+    async deleteCart({commit, dispatch }, id) {
+      try{
+        await axios.delete(`${api}user/${id}/cart`)
+        commit('setMessage', 'Cart was emptied'); 
+        dispatch('getCart');
+      } catch (error) {
+        commit('setMessage', 'Could not empty cart')
       }
     }
   },

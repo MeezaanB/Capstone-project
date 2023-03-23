@@ -15,7 +15,7 @@
                         <a class="nav-link" aria-current="page" href="/shop">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin">Admin</a>
+                        <a class="nav-link" v-if="this.$store.state.userAuth" href="/admin">Admin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
@@ -25,13 +25,14 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto" style="list-style: none;padding:30px;">
+                    <li><button class="btn">Logout</button></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                            Account
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/profile">My Account</a></li>
+                            <li><a class="dropdown-item" href="/account">My Account</a></li>
                             <li><a class="dropdown-item" href="/login">Login</a></li>
                             <li><a class="dropdown-item" href="/register">Register</a></li>
                         </ul>

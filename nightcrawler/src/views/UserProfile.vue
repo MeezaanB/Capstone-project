@@ -2,20 +2,24 @@
     <main>
         <section id="profile">
             <div class="container">
-                <div class="row align-items-center">
+              <h1 class="text-center">This is the account {{$store.state.user.firstName}} {{$store.state.user.lastName}}</h1>
+                <div class="row align-items-center p-5">
                   <div class="col-sm-6">
-                    <img class="view" :src="user?.userProfile" alt="">
+                    <img class="view img-fluid" :src="$store.state.user.userProfile" alt="">
                   </div>
                   <div class="col-sm-6" style="padding: 25px">
                     <p class="text-start">
                       <span>First Name:</span> 
-                      {{ user?.firstName }}</p><br>
+                      {{ $store.state.user.firstName }}</p><br>
                     <p class="text-start">
                       <span>LastName:</span>
-                      {{user?.lastName}}</p><br>
+                      {{ $store.state.user.lastName}}</p><br>
                     <p class="text-start">
-                      <span>Email Address:</span> 
-                      {{user?.emailAddress}}</p><br>
+                      <span>Email:</span>
+                      {{ $store.state.user.emailAddress }}</p><br>
+                    <p class="text-start">
+                      <span>Role:</span>
+                      {{ $store.state.user.userRole }}</p><br>
                   </div>
                 </div>
               </div>
@@ -26,22 +30,10 @@
   
 <script>
 import FooterComponent from '@/components/FooterComponent.vue';
-import { computed } from '@vue/runtime-core'
-import { useStore } from 'vuex';
-
 
 export default {
     components: { FooterComponent },
-    setup() {
-    const store = useStore()
-    const user = computed(() => store.state.user)
-    return { user }
-  },
-
-  mounted() {
-    this.$store.dispatch("getUser", this.$route.params.id)
-  }
-
+  
   }
 
 
@@ -59,17 +51,12 @@ main {
 }
 
 .view {
-  max-width: 100%;
   transition: all 0.3s;
   display: block;
   width: 100%;
-  max-height: 70vh;
+  max-height: 65vh;
   transform: scale(1);
   box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
-}
-
-.view:hover {
-  transform: scale(1.1);
 }
 
 span {

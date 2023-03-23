@@ -37,8 +37,19 @@ checkout
   
 <script>
 import FooterComponent from '@/components/FooterComponent.vue';
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex';
 export default {
-  components: { FooterComponent }
+  components: { FooterComponent },
+  setup() {
+    const store = useStore()
+    const cart = computed(() => store.state.cart)
+    return { cart }
+  },
+
+  mounted() {
+    this.$store.dispatch("getCart", this.$route.params.id)
+  }
 }
 </script>
 <style scoped>

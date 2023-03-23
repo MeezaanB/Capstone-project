@@ -27,15 +27,14 @@
             <SpinnerComponent style="display: flex;justify-content:center;padding:20px" v-if="isSpinning"/>
             <div v-else>
               <div class="row row-cols-sm-4 gap-3" style="padding: 20px;justify-content:center">
-                <div class="card" style="width:17rem" v-for="product in filter
-                " :key="product.productID">
+                <div class="card" style="width:17rem" v-for="product in filter" :key="product.productID">
                   <img :src="product.imgURL" style="height: 10rem;" class="image-fluid">
                   <div class="overlay">
                     <div class="text" style="display:flex;justify-content:center;gap:5px">
                       <router-link :to="{name: 'single', params : {id: product.productID}}">
                         <button class="btn btn-info" v-if="this.$store.state.userAuth">View Product</button>
                       </router-link>
-                      <button class="btn btn-primary">Add to Cart</button>
+                      <button class="btn btn-primary" v-if="this.$store.state.userAuth">Add to Cart</button>
                     </div>
                   </div>
                   <h3 class="product">{{ product.productName }}</h3>
