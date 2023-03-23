@@ -25,7 +25,10 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto" style="list-style: none;padding:30px;">
-                    <li><button class="btn">Logout</button></li>
+                    <router-link :to="{name: 'logout'}">
+                        <li><button class="btn">Logout</button></li>
+                    </router-link>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">

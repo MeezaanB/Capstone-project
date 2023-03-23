@@ -2,24 +2,24 @@
     <main>
         <section id="profile">
             <div class="container">
-              <h1 class="text-center">This is the account {{$store.state.user.firstName}} {{$store.state.user.lastName}}</h1>
+              <h1 class="text-center">This is the account of {{$store.state.user?.firstName}} {{$store.state.user?.lastName}}</h1>
                 <div class="row align-items-center p-5">
                   <div class="col-sm-6">
-                    <img class="view img-fluid" :src="$store.state.user.userProfile" alt="">
+                    <img class="view img-fluid" :src="$store.state.user?.userProfile">
                   </div>
                   <div class="col-sm-6" style="padding: 25px">
                     <p class="text-start">
                       <span>First Name:</span> 
-                      {{ $store.state.user.firstName }}</p><br>
+                      {{ $store.state.user?.firstName }}</p><br>
                     <p class="text-start">
                       <span>LastName:</span>
-                      {{ $store.state.user.lastName}}</p><br>
+                      {{ $store.state.user?.lastName}}</p><br>
                     <p class="text-start">
                       <span>Email:</span>
-                      {{ $store.state.user.emailAddress }}</p><br>
+                      {{ $store.state.user?.emailAddress }}</p><br>
                     <p class="text-start">
                       <span>Role:</span>
-                      {{ $store.state.user.userRole }}</p><br>
+                      {{ $store.state.user?.userRole }}</p><br>
                   </div>
                 </div>
               </div>
