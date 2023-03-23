@@ -20,6 +20,7 @@
               <th>Gender</th>
               <th>EmailAddress</th>
               <th>Image</th>
+              <th>Role</th>
               <th>Date</th>
               <th>Edit</th>
               <th>Delete</th>
@@ -33,6 +34,7 @@
               <td data-label="Gender">{{ user.gender }}</td>
               <td data-label="EmailAddress">{{ user.emailAddress }}</td>
               <td data-label="Image"><img :src="user.userProfile" style="height:5rem" alt=""></td>
+              <td data-label="Role">{{ user.userRole }}</td>
               <td data-label="Date">{{ user.user_joined }}</td>
               <td data-label="Edit">
                 <UpdateUser />
@@ -235,4 +237,5 @@ export default {
     font-weight: bold;
     text-align: left;
   }
-}</style>
+}
+</style>

@@ -64,14 +64,14 @@ export default createStore({
         try {
           const response = await axios.post(`${api}login`, payload);
           console.log('Response:' ,response);
-            const { user, result, jToken,  msg, err} = await response.data
+            const {  result, jToken,  msg, err} = await response.data
             if(result) {
               context.commit('setUser', result);
               context.commit('setToken', jToken);
               cookies.set('user_cookie_value', jToken)
               context.commit('setMessage', msg);
               setTimeout(()=> {
-                router.push({name: 'profile' ,params: { id: user.userID} });
+                router.push({name: 'landing' });
               }), 3000
             }else {
               context.commit('setMessage', err);
@@ -192,8 +192,26 @@ export default createStore({
       } catch (error) {
         commit('setMessage', 'Could not delete product')
       }
-    }
+    },
      /* CART METHODS */
+    async fetchCart(context, id) {
+      const res = await axios.get(`${api}user/${id}/carts`)
+      let { results, err } = await res.data;
+      if (results) {
+        context.commit('setCart', results[0])
+      } else {
+        context.commit('setMessage', err)
+      }
+    },
+    async addCart(context, id) {
+      const res = await axios.post(`${api}/user/${id}/cart`)
+      let {results, err} = await res.data
+      if (results) {
+        context.commit('setCart', results)
+      } else {
+        context.commit('setMessage', err)
+      }
+    }
   },
   modules: {}
 })

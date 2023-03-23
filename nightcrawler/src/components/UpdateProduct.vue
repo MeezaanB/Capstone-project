@@ -13,8 +13,8 @@
           <h1 class="modal-title fs-5" id="updateProductModel">Update Product</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <form @submit.prevent="updateProduct()">
+        <div v-for="product in products" :key="product.productID" class="modal-body">
+          <form @submit.prevent="updateProduct(product.productID)">
             <div class="form-row">
               <input class="form-control my-3" v-model="product.productID" type="text" placeholder="Product ID">
             </div>
@@ -44,7 +44,15 @@
   </div>
 </template>
 <script>
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex';
 export default {
+  setup() {
+    const store = useStore()
+    store.dispatch("getProducts")
+    const products = computed(() => store.state.products)
+    return { products }
+  },
   data() {
     return {
       product: {
@@ -74,12 +82,12 @@ export default {
             imgURL: product.imgURL
           })
         }
-        // updateProduct(id) {
-        // console.log('Debug', this.payload);
-        // this.$store.dispatch('updateProduct', this.payload, id)
       }
     }
   }
 }
 </script>
-<style scoped></style>
+
+<style scoped>
+
+</style>

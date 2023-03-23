@@ -38,6 +38,9 @@
                   required>
             </div>
             <div class="form-row">
+                <input type="text" v-model="payload.userRole" class="form-control my-3" required>
+            </div>
+            <div class="form-row">
                 <input type="date" v-model="payload.joinDate" class="form-control my-3" required>
             </div>
             <div class="modal-footer">
@@ -63,6 +66,7 @@ export default {
         emailAddress: '',
         userPassword: '',
         userProfile: 'https://i.postimg.cc/Gt87rd3h/team.jpg',
+        userRole: 'user',
         joinDate: ''
       }
     }

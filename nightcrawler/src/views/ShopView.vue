@@ -8,16 +8,12 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="buttons align-items-center" style="padding: 20px;display:grid; gap:10px;">
-              <form class="d-flex" role="search">
-                <input class="form-control w-100" v-model="searchProductName" type="search" placeholder="Search Product by Name"
-                  aria-label="Search">
+              <form class="d-flex" role="searching">
+                <input class="form-control w-100" v-model="searching" type="searching" placeholder="Searching Product by Name"
+                  aria-label="Searching">
               </form>
               <button @click.prevent="sortbyPrice" class="btn btn-dark w-100">Sort Price <i class="fa-solid fa-arrow-up"></i> <i class="fa-solid fa-arrow-down"></i></button>
               <div class="dropdown">
-                <!-- <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  Filter By
-                </button> -->
                 <select class="btn btn-dark w-100" required v-model="category">
                   <option value="" selected >All Items</option>
                   <option value="low maintenance">low maintenance</option>
@@ -31,7 +27,8 @@
             <SpinnerComponent style="display: flex;justify-content:center;padding:20px" v-if="isSpinning"/>
             <div v-else>
               <div class="row row-cols-sm-4 gap-3" style="padding: 20px;justify-content:center">
-                <div class="card" style="width:17rem" v-for="product in filteredByProductName" :key="product.productID">
+                <div class="card" style="width:17rem" v-for="product in filter
+                " :key="product.productID">
                   <img :src="product.imgURL" style="height: 10rem;" class="image-fluid">
                   <div class="overlay">
                     <div class="text" style="display:flex;justify-content:center;gap:5px">
@@ -61,13 +58,6 @@ import SpinnerComponent from '@/components/SpinnerComponent.vue';
 import FooterComponent from '@/components/FooterComponent.vue';
 export default {
   components: { SpinnerComponent, FooterComponent },
-  setup() {
-    const store = useStore()
-    store.dispatch("getProducts")
-    const products = computed(() => store.state.products)
-    // products.value.filter((product) => product.category === "high maintenance")
-    return { products }
-  },
   created() {
     setTimeout(() => {
       this.isSpinning = false;
@@ -75,25 +65,27 @@ export default {
   },
   data() {
     return {
-      searchProductName: "",
-      // filterOption: [],
       isSpinning: true,
+      searching: '',
       category: ''
     }
   },
+  setup() {
+    const store = useStore()
+    store.dispatch("getProducts")
+    const products = computed(() => store.state.products)
+    return { products }
+  },
   computed: {
-    filteredByProductName() {
-      let filteredByCategory = this.products.filter(item => item.category == this.category || this.category == '')
-      if (this.searchProductName.trim().length > 0) {
-        return filteredByCategory.filter((input) => input.category.toLowerCase().includes(this.filteredByCategory.trim().toLowerCase))
+    filter() {
+      let filterMethod = this.products.filter(item => item.category == this.category || this.category == '')
+      if (this.searching.trim().length > 0) {
+        return filterMethod.filter((input) => input.productName.toLowerCase().includes(this.searching.trim().toLowerCase()))
       }
-      return filteredByCategory
-      // return this.products.filter(product => {
-      //   return product.productName.toLowerCase().includes(this.searchProductName.toLowerCase())
-      }
-    },
+      return filterMethod
+    }
+  },
     
-
   methods: {
     sortbyPrice() {
       this.$store.commit("sortProductsByPrice");
