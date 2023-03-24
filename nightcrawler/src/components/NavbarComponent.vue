@@ -15,7 +15,7 @@
                         <a class="nav-link" aria-current="page" href="/shop">Shop</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-if="this.$store.state.userAuth" href="/admin">Admin</a>
+                        <a class="nav-link" href="/admin">Admin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>

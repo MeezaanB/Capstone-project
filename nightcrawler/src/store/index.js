@@ -68,7 +68,6 @@ export default createStore({
             if(result) {
               context.commit('setUser', result);
               context.commit('setToken', jToken);
-              // cookies.set('user_cookie_value', jToken)
               localStorage.setItem('user_token', jToken)
               localStorage.setItem('user', JSON.stringify(result))
               context.commit('setMessage', msg);
