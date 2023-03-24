@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
-const api = "https://nightcrawler-test.onrender.com/"
+const api = "https://nightcrawler-new.onrender.com/"
 export default createStore({
   state: {
     users: null,
