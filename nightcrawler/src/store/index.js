@@ -1,8 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import router from '@/router'
-// import {useCookies} from 'vue3-cookies';
-// const {cookies} =useCookies();
 const api = "https://nightcrawler-test.onrender.com/"
 export default createStore({
   state: {
@@ -65,6 +63,7 @@ export default createStore({
         try {
           const response = await axios.post(`${api}login`, payload);
           console.log('Response:' ,response);
+          alert('Logged In') 
             const {  result, jToken,  msg, err} = await response.data
             if(result) {
               context.commit('setUser', result);
@@ -87,6 +86,7 @@ export default createStore({
       try {
         const res = await axios.post(`${api}register`, payload);
         console.log('Response:' , res);
+        alert('Successfully Added User') 
         const {result, msg, err} = await res.data;
         if (result) {
           context.commit ('setUser', result);
@@ -117,22 +117,25 @@ export default createStore({
         context.commit('setMessage', err)
       }
     },
-    async updateUser({commit}, id, payload) {
+    async updateUser(context, payload) {
       try {
-        const res = await axios.put(`${api}user/${id}`, payload)
-        let { msg, err} = await res.data;
-        if (msg) {
-          commit('setUser', msg);
+        const res = await axios.put(`${api}user/${payload.userID}`, payload)
+        console.log('Response:' , res);
+        alert('Successfully Updated Details')
+        let { results, err} = await res.data;
+        if (results) {
+          context.commit('setUser', results[0])
         } else {
-          commit('setMessage', err)
+          context.commit('setMessage', err)
         }
-      } catch (error) {
-        console.error(error)
+      } catch(error) {
+        console.log(error)
       }
     },  
     async deleteUser({commit, dispatch }, id) {
       try{
         await axios.delete(`${api}user/${id}`)
+        alert('Successfully Deleted User') 
         commit('setMessage', 'User Deleted successfully'); 
         dispatch('getUsers');
       } catch (error) {
@@ -162,6 +165,7 @@ export default createStore({
       try {
         const res = await axios.post(`${api}product`, payload);
         console.log('Response:' , res);
+        alert('Successfully Added Product')
         let { result, msg, err } = await res.data;
         if (result) {
           context.commit('setProduct', result);
@@ -177,6 +181,7 @@ export default createStore({
       try {
         const res = await axios.put(`${api}product/${payload.productID}`, payload)
         console.log('Response:' , res);
+        alert('Successfully Updated Product')
         let { results, err} = await res.data;
         if (results) {
           context.commit('setProduct', results[0])
@@ -190,7 +195,8 @@ export default createStore({
     async deleteProduct({commit, dispatch }, id) {
       try{
         await axios.delete(`${api}product/${id}`)
-        commit('setMessage', 'Product Deleted successfully'); 
+        commit('setMessage', 'Product Deleted successfully');
+        alert('Successfully Deleted Product') 
         dispatch('getProducts');
       } catch (error) {
         commit('setMessage', 'Could not delete product')

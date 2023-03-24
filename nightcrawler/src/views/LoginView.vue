@@ -24,6 +24,7 @@
                   </div>
                   <div class="form-row">
                     <div class="col-sm-6">
+                      
                       <button type="submit" class="btn1 mt-3 mb-5" @click.prevent="login">Login</button>
                     </div>
                   </div>
@@ -70,7 +71,12 @@ export default {
         console.log('Debug:', this.payload);
         this.$store.dispatch('login', this.payload)
       }
-    } 
+    },
+    created() {
+    setTimeout(() => {
+      this.isSpinning = false;
+    }, 3000)
+  }, 
   }
   </script>
   <style scoped>

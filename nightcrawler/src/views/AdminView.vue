@@ -37,57 +37,60 @@
               <td data-label="Role">{{ user.userRole }}</td>
               <td data-label="Date">{{ user.user_joined }}</td>
               <td data-label="Edit">
-                <!-- <UpdateUser /> -->
-                 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#updateUserModal' + `${user.userID}`">
-  Edit
-</button>
+                <!-- UpdateUser -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  :data-bs-target="'#updateUserModal' + `${user.userID}`">
+                  Edit
+                </button>
 
-<!-- Modal -->
-<div class="modal fade" :id="'updateUserModal' + `${user.userID}`" tabindex="-1" aria-labelledby="updateUserModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateUserModal">Update User</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form @submit.prevent="register">            
-          <div class="form-row">
-              <input type="text" v-model="user.firstName" placeholder="First Name" class="form-control my-3"
-                required>
-          </div>
-          <div class="form-row">
-              <input type="text" v-model="user.lastName" placeholder="Last Name" class="form-control my-3"
-                required>
-          </div>
-          <div class="form-row">
-              <input type="text" v-model="user.gender" placeholder="Gender" class="form-control my-3" required>
-          </div>
-          <div class="form-row">
-              <input type="email" v-model="user.emailAddress" placeholder="Email Address" class="form-control my-3"
-                required>
-          </div>
-          <div class="form-row">
-            <input type="text" v-model="user.userProfile" placeholder="IMG URL" class="form-control my-3"
-            required>
-          </div>
-          <div class="form-row">
-              <input type="text" v-model="user.userRole" placeholder="******" class="form-control"
-                required>
-          </div>
-          <!-- <div class="form-row">
-              <input type="date" v-model="user.joinDate" class="form-control my-3" required>
-          </div> -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Add User</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+                <!-- Modal -->
+                <div class="modal fade" :id="'updateUserModal' + `${user.userID}`" tabindex="-1"
+                  aria-labelledby="updateUserModal" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateUserModal">Update User</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form @submit.prevent="updateUser(user)">
+                          <div class="form-row">
+                            <input type="text" v-model="user.firstName" placeholder="First Name" class="form-control my-3"
+                              required>
+                          </div>
+                          <div class="form-row">
+                            <input type="text" v-model="user.lastName" placeholder="Last Name" class="form-control my-3"
+                              required>
+                          </div>
+                          <div class="form-row">
+                            <input type="text" v-model="user.gender" placeholder="Gender" class="form-control my-3"
+                              required>
+                          </div>
+                          <div class="form-row">
+                            <input type="email" v-model="user.emailAddress" placeholder="Email Address"
+                              class="form-control my-3" required>
+                          </div>
+                          <div class="form-row">
+                            <input type="password" placeholder="Password"
+                              class="form-control my-3" required>
+                          </div>
+                          <div class="form-row">
+                            <input type="text" v-model="user.userProfile" placeholder="IMG URL" class="form-control my-3"
+                              required>
+                          </div>
+                          <div class="form-row">
+                            <input type="text" v-model="user.userRole" placeholder="******" class="form-control" required>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update User</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
               <td data-label="Delete"><button @click="deleteUser(user.userID)" type="submit"
                   class="btn btn-danger">Delete</button></td>
@@ -169,14 +172,14 @@
                     </div>
                   </div>
                 </div>
-                <!-- <UpdateProduct /> -->
+                <!-- UpdateProduct -->
               </td>
               <td data-label="Delete"><button @click="deleteProduct(product.productID)" type="submit"
                   class="btn btn-danger">Delete</button></td>
             </tr>
           </tbody>
         </table>
-        <!-- PRODUCTS  -->
+        <!-- PRODUCTS TABLE ENDS  -->
       </div>
     </section>
   </main>
@@ -187,9 +190,7 @@ import { computed } from '@vue/runtime-core'
 import { useStore } from 'vuex';
 import SpinnerComponent from '@/components/SpinnerComponent.vue';
 import AddProduct from '@/components/AddProduct.vue';
-// import UpdateProduct from '@/components/UpdateProduct.vue'
 import AddUser from '@/components/AddUser.vue';
-// import UpdateUser from '@/components/UpdateUser.vue'
 import FooterComponent from '@/components/FooterComponent.vue';
 export default {
   components: { SpinnerComponent, AddProduct, AddUser, FooterComponent, },
@@ -226,16 +227,18 @@ export default {
         imgURL: product.imgURL
       })
     },
-    // updateProduct(id) {
-    //   this.$store.dispatch('updateProduct', id, {
-    //     // productID: this.productID,
-    //     // productName: this.productName,
-    //     // category: this.category,
-    //     // price: this.price,
-    //     // productQuantity: this.productQuantity,
-    //     // imgURL: this.imgURL
-    //   })
-    // },
+    updateUser: function (user) {
+      return this.$store.dispatch('updateUser', {
+        userID: user.userID,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        gender: user.gender,
+        emailAddress: user.emailAddress,
+        userPassword: user.userPassword,
+        userProfile: user.userProfile,
+        userRole: user.userRole
+      })
+    },
     deleteUser(id) {
       this.$store.dispatch('deleteUser', id)
     },
