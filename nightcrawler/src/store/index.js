@@ -3,7 +3,7 @@ import axios from 'axios'
 import router from '@/router'
 // import {useCookies} from 'vue3-cookies';
 // const {cookies} =useCookies();
-const api = "https://nightcrawler-capstone.onrender.com/"
+const api = "https://nightcrawler-test.onrender.com/"
 export default createStore({
   state: {
     users: null,
@@ -197,11 +197,11 @@ export default createStore({
       }
     },
      /* CART METHODS */
-    async getCart(context, id) {
-      const res = await axios.get(`${api}user/${id}/carts`)
+    async getCart(context) {
+      const res = await axios.get(`${api}user/1/carts`)
       let { results, err } = await res.data;
       if (results) {
-        context.commit('setCart', results[0])
+        context.commit('setCart', results)
       } else {
         context.commit('setMessage', err)
       }

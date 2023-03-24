@@ -44,7 +44,7 @@ const routes = [
       router.push({name: 'login'})
       localStorage.removeItem('user_token')
       localStorage.removeItem('user')
-      window.location.reload()
+      location.reload()
     }
   },
   {

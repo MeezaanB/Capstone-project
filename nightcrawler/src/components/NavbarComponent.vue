@@ -26,7 +26,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto" style="list-style: none;padding:30px;">
                     <router-link :to="{name: 'logout'}">
-                        <li><button class="btn">Logout</button></li>
+                        <li><button class="btn btn-outline-dark">Logout</button></li>
                     </router-link>
                     
                     <li class="nav-item dropdown">
