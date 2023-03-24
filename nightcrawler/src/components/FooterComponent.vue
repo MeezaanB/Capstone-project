@@ -37,6 +37,9 @@ footer
             <a href="#" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
           </div>
         </div>
+		<div class="col">
+			<p class="text-center text-light">&copy;Copyright {{ thisYear }} || All rights reserved</p>
+		</div>
       </div>
     </div>
  </footer>
@@ -44,7 +47,11 @@ footer
 </template>
 <script>
 export default {
-  components: {},
+  data(){
+	return {
+		thisYear : new Date().getFullYear()
+	}
+  }
 };
 </script>
 <style scoped>

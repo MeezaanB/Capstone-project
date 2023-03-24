@@ -22,6 +22,7 @@
             <p class="text-start">
               <span>Product Price:</span>
                R{{product?.price}}</p>
+            <p class="text-start"><a class="btn btn-primary" href="/shop">Take me back to shop</a></p>
           </div>
         </div>
       </div>

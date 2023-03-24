@@ -44,7 +44,7 @@ const routes = [
       router.push({name: 'login'})
       localStorage.removeItem('user_token')
       localStorage.removeItem('user')
-      location.reload()
+      window.location.reload()
     }
   },
   {
@@ -55,7 +55,12 @@ const routes = [
   {
     path: '/account',
     name: 'account',
-    component: () => import('../views/UserProfile.vue')
+    component: () => import('../views/UserProfile.vue'),
+    // beforeEnter () {
+    //   router.push({name: 'login'})
+    //   localStorage.setItem('user_token')
+    //   localStorage.setItem('user')
+    // }
   },
 ]
 

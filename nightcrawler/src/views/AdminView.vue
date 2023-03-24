@@ -37,7 +37,57 @@
               <td data-label="Role">{{ user.userRole }}</td>
               <td data-label="Date">{{ user.user_joined }}</td>
               <td data-label="Edit">
-                <UpdateUser />
+                <!-- <UpdateUser /> -->
+                 <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#updateUserModal' + `${user.userID}`">
+  Edit
+</button>
+
+<!-- Modal -->
+<div class="modal fade" :id="'updateUserModal' + `${user.userID}`" tabindex="-1" aria-labelledby="updateUserModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateUserModal">Update User</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form @submit.prevent="register">            
+          <div class="form-row">
+              <input type="text" v-model="user.firstName" placeholder="First Name" class="form-control my-3"
+                required>
+          </div>
+          <div class="form-row">
+              <input type="text" v-model="user.lastName" placeholder="Last Name" class="form-control my-3"
+                required>
+          </div>
+          <div class="form-row">
+              <input type="text" v-model="user.gender" placeholder="Gender" class="form-control my-3" required>
+          </div>
+          <div class="form-row">
+              <input type="email" v-model="user.emailAddress" placeholder="Email Address" class="form-control my-3"
+                required>
+          </div>
+          <div class="form-row">
+            <input type="text" v-model="user.userProfile" placeholder="IMG URL" class="form-control my-3"
+            required>
+          </div>
+          <div class="form-row">
+              <input type="text" v-model="user.userRole" placeholder="******" class="form-control"
+                required>
+          </div>
+          <!-- <div class="form-row">
+              <input type="date" v-model="user.joinDate" class="form-control my-3" required>
+          </div> -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
               </td>
               <td data-label="Delete"><button @click="deleteUser(user.userID)" type="submit"
                   class="btn btn-danger">Delete</button></td>
@@ -72,7 +122,54 @@
               <td data-label="Quantity">{{ product.productQuantity }}</td>
               <td data-label="Image"><img :src="product.imgURL" style="height:5rem" alt=""></td>
               <td data-label="Edit">
-                <UpdateProduct />
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  :data-bs-target="'#updateProductModal' + `${product.productID}`">
+                  Edit
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" :id="'updateProductModal' + `${product.productID}`" tabindex="-1"
+                  aria-labelledby="updateProductModel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateProductModel">Update Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form @submit.prevent="updateProduct(product)">
+                          <div class="form-row">
+                            <input class="form-control my-3" v-model="product.productID" type="text"
+                              placeholder="Product ID">
+                          </div>
+                          <div class="form-row">
+                            <input class="form-control my-3" v-model="product.productName" type="text"
+                              placeholder="Product Name">
+                          </div>
+                          <div class="form-row">
+                            <input class="form-control my-3" v-model="product.category" type="text"
+                              placeholder="Category">
+                          </div>
+                          <div class="form-row">
+                            <input class="form-control my-3" v-model="product.price" type="number" placeholder="Price">
+                          </div>
+                          <div class="form-row">
+                            <input class="form-control my-3" v-model="product.productQuantity" type="number"
+                              placeholder="Quantity">
+                          </div>
+                          <div class="form-row">
+                            <input class="form-control my-3" v-model="product.imgURL" type="text" placeholder="IMG URL">
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update Product</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <UpdateProduct /> -->
               </td>
               <td data-label="Delete"><button @click="deleteProduct(product.productID)" type="submit"
                   class="btn btn-danger">Delete</button></td>
@@ -90,12 +187,12 @@ import { computed } from '@vue/runtime-core'
 import { useStore } from 'vuex';
 import SpinnerComponent from '@/components/SpinnerComponent.vue';
 import AddProduct from '@/components/AddProduct.vue';
-import UpdateProduct from '@/components/UpdateProduct.vue'
+// import UpdateProduct from '@/components/UpdateProduct.vue'
 import AddUser from '@/components/AddUser.vue';
-import UpdateUser from '@/components/UpdateUser.vue'
+// import UpdateUser from '@/components/UpdateUser.vue'
 import FooterComponent from '@/components/FooterComponent.vue';
 export default {
-  components: { SpinnerComponent, AddProduct, UpdateProduct, AddUser, UpdateUser, FooterComponent, },
+  components: { SpinnerComponent, AddProduct, AddUser, FooterComponent, },
   setup() {
     const store = useStore()
 
@@ -117,13 +214,37 @@ export default {
       isSpinning: true
     }
   },
-  methods: {
+  methods:
+  {
+    updateProduct: function (product) {
+      return this.$store.dispatch('updateProduct', {
+        productID: product.productID,
+        productName: product.productName,
+        category: product.category,
+        price: product.price,
+        productQuantity: product.productQuantity,
+        imgURL: product.imgURL
+      })
+    },
+    // updateProduct(id) {
+    //   this.$store.dispatch('updateProduct', id, {
+    //     // productID: this.productID,
+    //     // productName: this.productName,
+    //     // category: this.category,
+    //     // price: this.price,
+    //     // productQuantity: this.productQuantity,
+    //     // imgURL: this.imgURL
+    //   })
+    // },
     deleteUser(id) {
       this.$store.dispatch('deleteUser', id)
     },
     deleteProduct(id) {
       this.$store.dispatch('deleteProduct', id)
     }
+  },
+  mounted() {
+    this.$store.dispatch('updateProduct', this.$route.params.id)
   }
 }
 

@@ -1,11 +1,11 @@
 <template>
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUserModal">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#updateUserModal' + `${user.userID}`">
     Edit
   </button>
   
   <!-- Modal -->
-  <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModal" aria-hidden="true">
+  <div class="modal fade" :id="'updateUserModal' + `${user.userID}`" tabindex="-1" aria-labelledby="updateUserModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -15,40 +15,36 @@
         <div class="modal-body">
           <form @submit.prevent="register">            
             <div class="form-row">
-                <input type="text" v-model="payload.firstName" placeholder="First Name" class="form-control my-3"
+                <input type="text" v-model="user.firstName" placeholder="First Name" class="form-control my-3"
                   required>
             </div>
             <div class="form-row">
-                <input type="text" v-model="payload.lastName" placeholder="Last Name" class="form-control my-3"
+                <input type="text" v-model="user.lastName" placeholder="Last Name" class="form-control my-3"
                   required>
             </div>
             <div class="form-row">
-                <input type="text" v-model="payload.gender" placeholder="Gender" class="form-control my-3" required>
+                <input type="text" v-model="user.gender" placeholder="Gender" class="form-control my-3" required>
             </div>
             <div class="form-row">
-                <input type="email" v-model="payload.emailAddress" placeholder="Email Address" class="form-control my-3"
+                <input type="email" v-model="user.emailAddress" placeholder="Email Address" class="form-control my-3"
                   required>
             </div>
             <div class="form-row">
-                <input type="password" v-model="payload.userPassword" placeholder="******" class="form-control"
+                <input type="password" v-model="user.userPassword" placeholder="******" class="form-control"
                   required>
             </div>
             <div class="form-row">
-                <input type="text" v-model="payload.userProfile" placeholder="IMG URL" class="form-control my-3"
+                <input type="text" v-model="user.userProfile" placeholder="IMG URL" class="form-control my-3"
                   required>
             </div>
             <div class="form-row">
-                <input type="date" v-model="payload.joinDate" class="form-control my-3" required>
+                <input type="date" v-model="user.joinDate" class="form-control my-3" required>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Add User</button>
             </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>

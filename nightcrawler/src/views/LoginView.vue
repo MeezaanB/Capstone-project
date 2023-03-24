@@ -27,6 +27,7 @@
                       <button type="submit" class="btn1 mt-3 mb-5" @click.prevent="login">Login</button>
                     </div>
                   </div>
+                  <div><ForgetPassword/></div>
                   <p>Don't have an account? <a href="/register">Register here</a></p>
                 </form>
               </center>
@@ -37,10 +38,11 @@
   </template>
   
 <script>
+import ForgetPassword from '@/components/ForgetPassword.vue';
 import { computed } from '@vue/runtime-core'
 import { useStore } from 'vuex';
 export default {
-    components: {},
+    components: { ForgetPassword },
     setup() {
     const store = useStore()
     store.dispatch("getUsers")

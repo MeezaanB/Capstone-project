@@ -36,8 +36,8 @@ export default createStore({
     setProduct(state, value) {
       state.product = value
     },
-    setCart(state, value) {
-      state.cart = value
+    setCart(state, values) {
+      state.cart = values
     },
     setSpinner(state, spinner) {
       state.spinner = spinner
@@ -173,9 +173,9 @@ export default createStore({
         console.error(error) 
       }
     },
-    async updateProduct(context, id, payload) {
+    async updateProduct(context, payload) {
       try {
-        const res = await axios.put(`${api}product/${id}`, payload)
+        const res = await axios.put(`${api}product/${payload.productID}`, payload)
         console.log('Response:' , res);
         let { results, err} = await res.data;
         if (results) {
@@ -201,7 +201,8 @@ export default createStore({
       const res = await axios.get(`${api}user/1/carts`)
       let { results, err } = await res.data;
       if (results) {
-        context.commit('setCart', results)
+        context.commit('setUser', results)
+        context.commit('setCart', results[0])
       } else {
         context.commit('setMessage', err)
       }
@@ -224,9 +225,9 @@ export default createStore({
           context.commit('setMessage', err)
         }
     },
-    async deleteItemCart({commit, dispatch }, id) {
+    async deleteItemCart({commit, dispatch }) {
       try{
-        await axios.delete(`${api}user/${id}/cart/${id}`)
+        await axios.delete(`${api}user/1/cart/1`)
         commit('setMessage', 'Item removed successfully'); 
         dispatch('getCart');
       } catch (error) {
