@@ -11,18 +11,18 @@
             <th>Price</th>
             <th>Quantity</th>
             <th>IMG</th>
-            <th>Remove Item</th>
-            <th>Clear Cart</th>
+            <!-- <th>Remove Item</th>
+            <th>Clear Cart</th> -->
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td data-label="Name">{{ $store.state.cart?.productName }}</td>
-            <td data-label="Price">R{{ $store.state.cart?.price }}</td>
+          <tr v-for="product in getCart" :key="product.cartID">
+            <td data-label="Name">{{ product.productName }}</td>
+            <td data-label="Price">R{{ product.price }}</td>
             <td data-label="Quantity">1</td>
-            <td data-label="Image"><img :src="$store.state.cart?.imgURL" style="height:5rem" alt=""></td>
-            <td data-label="Delete"><button @click.prevent="deleteItemCart(cart?.cartID)" type="submit" class="btn btn-danger">Remove Item</button></td>
-            <td data-label="Delete"><button @click.prevent="deleteCart()" type="submit" class="btn btn-danger">Clear Cart</button></td>
+            <td data-label="Image"><img :src="product.imgURL" style="height:5rem" alt=""></td>
+            <!-- <td data-label="Delete"><button @click.prevent="deleteItemCart(cart?.cartID)" type="submit" class="btn btn-danger">Remove Item</button></td>
+            <td data-label="Delete"><button @click.prevent="deleteCart()" type="submit" class="btn btn-danger">Clear Cart</button></td> -->
           </tr>
         </tbody>
         <div class="checkout-button">
@@ -35,15 +35,17 @@
 </template>
 <script>
 import FooterComponent from '@/components/FooterComponent.vue';
-import { computed } from '@vue/runtime-core'
-import { useStore } from 'vuex';
 export default {
   components: { FooterComponent },
-  setup() {
-    const store = useStore()
-    store.dispatch("getCart")
-    const cart = computed(() => store.state.cart)
-    return { cart }
+  props: ['id'],
+  computed: {
+    getCart() {
+      console.log(this.$store.state.cart);
+      return this.$store.state.cart
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getCart', this.id)
   },
   methods: {
     deleteItemCart(id) {
@@ -158,4 +160,5 @@ export default {
     font-weight: bold;
     text-align: left;
   }
-}</style>
+}
+</style>
