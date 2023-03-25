@@ -17,7 +17,7 @@ class User {
             userPassword
         } = req.body;
         const querySt =
-            `SELECT firstName, lastName, gender, emailAddress, userPassword, userProfile, userRole, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
+            `SELECT userID, firstName, lastName, gender, emailAddress, userPassword, userProfile, userRole, DATE_FORMAT(joinDate, '%d-%m-%Y') AS user_joined 
         FROM users 
         WHERE emailAddress = '${emailAddress}' `;
         DB.query(querySt, async (err, data) => {
