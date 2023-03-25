@@ -202,27 +202,31 @@ export default createStore({
       }
     },
      /* CART METHODS */
-    async getCart(context) {
-      const res = await axios.get(`${api}user/1/carts`)
+   async getCart(context) {
+      let userID = localStorage.getItem('userID')
+      const res = await axios.get(`${api}user/${userID}/carts`)
       let { results, err } = await res.data;
-      if (results) {
-        context.commit('setUser', results)
-        context.commit('setCart', results[0])
-      } else {
-        context.commit('setMessage', err)
-      }
-    },
-    async addCart(context, id) {
-      const res = await axios.post(`${api}/user/${id}/cart`)
-      let {results, err} = await res.data
       if (results) {
         context.commit('setCart', results)
       } else {
         context.commit('setMessage', err)
       }
     },
-    async updateCart(context, id) {
-      const res = await axios.put(`${api}/user/${id}/cart/${id}`) 
+    async addCart(context, payload) {
+      console.log(payload);
+      alert('Added to cart')
+      let userID = localStorage.getItem('userID')
+      const {results, msg} = await axios.post(`${api}user/${userID}/cart`, payload)
+      if (results) {
+        context.commit('setCart', results.data)
+      } else {
+        context.commit('setMessage', msg)
+      }
+    },
+    async updateCart(context, payload) {
+      console.log(payload);
+      let userID = localStorage.getItem('userID')
+      const res = await axios.put(`${api}user/${userID.payload}/cart/`, payload) 
         let {results, err} = await res.data
         if (results, err) {
           context.commit('setCart', results)
