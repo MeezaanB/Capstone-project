@@ -34,7 +34,7 @@
                       <router-link :to="{name: 'single', params : {id: product.productID}}">
                         <button class="btn btn-info" v-if="this.$store.state.userAuth">View Product</button>
                       </router-link>
-                      <button class="btn btn-primary" v-if="this.$store.state.userAuth">Add to Cart</button>
+                      <button class="btn btn-primary" @click.prevent="addCart(product)">Add to Cart</button>
                     </div>
                   </div>
                   <h3 class="product">{{ product.productName }}</h3>
@@ -88,7 +88,20 @@ export default {
   methods: {
     sortbyPrice() {
       this.$store.commit("sortProductsByPrice");
+    },
+    async addCart(product) {
+      const userID = localStorage.getItem('userID',)
+      console.log(userID, product.productID);
+      this.$store.dispatch('addCart', {
+        'userID': userID,
+        'productID': product.productID,
+        payload: {
+          userID: userID,
+          productID: product.productID
+        }
+      })
     }
+
   },
 };
 </script>
@@ -160,4 +173,5 @@ export default {
 
 .btn {
   width: 100px;
-}</style>
+}
+</style>
